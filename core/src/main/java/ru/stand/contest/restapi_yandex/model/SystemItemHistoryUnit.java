@@ -27,13 +27,13 @@ import javax.annotation.Generated;
 public class SystemItemHistoryUnit {
 
   @JsonProperty("id")
-  private String id;
+  private UUID id;
 
   @JsonProperty("url")
   private JsonNullable<String> url = JsonNullable.undefined();
 
   @JsonProperty("parentId")
-  private JsonNullable<String> parentId = JsonNullable.undefined();
+  private UUID parentId;
 
   @JsonProperty("type")
   private SystemItemType type;
@@ -45,7 +45,7 @@ public class SystemItemHistoryUnit {
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   private Date date;
 
-  public SystemItemHistoryUnit id(String id) {
+  public SystemItemHistoryUnit id(UUID id) {
     this.id = id;
     return this;
   }
@@ -56,11 +56,11 @@ public class SystemItemHistoryUnit {
   */
   @NotNull 
   @Schema(name = "id", example = "элемент_1_1", description = "Уникальный идентфикатор", required = true)
-  public String getId() {
+  public UUID getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(UUID id) {
     this.id = id;
   }
 
@@ -83,8 +83,8 @@ public class SystemItemHistoryUnit {
     this.url = url;
   }
 
-  public SystemItemHistoryUnit parentId(String parentId) {
-    this.parentId = JsonNullable.of(parentId);
+  public SystemItemHistoryUnit parentId(UUID parentId) {
+    this.parentId = parentId;
     return this;
   }
 
@@ -94,11 +94,11 @@ public class SystemItemHistoryUnit {
   */
   
   @Schema(name = "parentId", example = "элемент_1_1", description = "id родительской папки", required = false)
-  public JsonNullable<String> getParentId() {
+  public UUID getParentId() {
     return parentId;
   }
 
-  public void setParentId(JsonNullable<String> parentId) {
+  public void setParentId(UUID parentId) {
     this.parentId = parentId;
   }
 

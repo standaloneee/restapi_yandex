@@ -1,0 +1,10 @@
+server:
+  port: 8080
+spring:
+  jackson:
+    date-format: ru.stand.contest.restapi_yandex.invoker.RFC3339DateFormat
+    serialization:
+      write-dates-as-timestamps: false
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER

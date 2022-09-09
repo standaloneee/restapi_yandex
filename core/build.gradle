@@ -1,0 +1,105 @@
+plugins {
+    id 'org.springframework.boot' version '2.7.3'
+    id 'io.spring.dependency-management' version '1.0.13.RELEASE'
+    id 'com.google.cloud.tools.jib' version '3.0.0'
+    id "org.openapi.generator" version "6.0.1"
+    id 'java'
+}
+
+group = 'ru.stand.contest'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.data:spring-data-jpa:2.7.2'
+//    implementation 'com.fasterxml.jackson.core:jackson-core:2.13.3'
+    implementation 'org.openapitools:jackson-databind-nullable:0.2.2'
+
+//    implementation 'io.springfox:springfox-swagger2:2.9.2'
+    implementation 'io.swagger.core.v3:swagger-core:2.2.2'
+
+    //Validation
+    implementation 'javax.validation:validation-api:2.0.1.Final'
+    implementation 'org.springframework.boot:spring-boot-starter-validation:2.6.2'
+
+    implementation "org.mapstruct:mapstruct:1.4.2.Final"
+    annotationProcessor "org.mapstruct:mapstruct-processor:1.4.2.Final"
+
+    runtimeOnly 'org.postgresql:postgresql'
+    implementation 'org.liquibase:liquibase-core'
+
+
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'org.postgresql:postgresql'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+//openApiGenerate {
+//    generatorName = "spring"
+//    inputSpec = "$rootDir/core/src/main/java/resources/openapi/openapi.yaml".toString()
+//    outputDir = "$rootDir/java/ru/stand/contest/restapi_yandex/models".toString()
+//    apiPackage = "org.openapi.example.api"
+//    invokerPackage = "org.openapi.example.invoker"
+//    modelPackage = "org.openapi.example.model"
+//    modelFilesConstrainedTo = [
+//            "Error"
+//    ]
+//    configOptions = [
+//            dateLibrary: "java8"
+//    ]
+//}
+
+
+var spec = "$rootDir/src/main/resources/openapi/openapi.yaml".toString()
+var generatedSourcesDir = "$rootDir".toString()
+
+
+task openApiGenerateTask(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
+    generatorName.set("spring")
+
+    inputSpec.set(spec)
+    outputDir.set(generatedSourcesDir)
+
+    apiPackage.set("ru.stand.contest.restapi_yandex.controller")
+    invokerPackage.set("ru.stand.contest.restapi_yandex.invoker")
+    modelPackage.set("ru.stand.contest.restapi_yandex.model")
+//    infoPackage.set("ru.stand.contest.restapi_yandex")
+
+    configOptions = [
+            dateLibrary: "java17"
+    ]
+
+}
+
+
+sourceSets {
+    main {
+        java {
+            srcDir("${buildDir}/src/main/java")
+        }
+    }
+}
+compileJava {
+    source += sourceSets.main.java
+}
+
+//tasks {
+////    var openApiGenerate = getting
+//    dependsOn(openApiGenerate)
+//
+//}
+tasks.named('test') {
+    useJUnitPlatform()
+}

@@ -50,20 +50,6 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
-//openApiGenerate {
-//    generatorName = "spring"
-//    inputSpec = "$rootDir/core/src/main/java/resources/openapi/openapi.yaml".toString()
-//    outputDir = "$rootDir/java/ru/stand/contest/restapi_yandex/models".toString()
-//    apiPackage = "org.openapi.example.api"
-//    invokerPackage = "org.openapi.example.invoker"
-//    modelPackage = "org.openapi.example.model"
-//    modelFilesConstrainedTo = [
-//            "Error"
-//    ]
-//    configOptions = [
-//            dateLibrary: "java8"
-//    ]
-//}
 
 
 var spec = "$rootDir/src/main/resources/openapi/openapi.yaml".toString()

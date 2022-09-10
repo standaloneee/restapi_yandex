@@ -1,22 +1,11 @@
-create table "folder"
+create table "item"
 (
-    "id"       uuid primary key,
-    "name"     varchar(255),
-    "url"      varchar(255),
-    "date"     DATE,
-    "parentId" uuid,
-    "type"     anyenum,
---     надо сделать long
-    "size"     INTEGER
-);
-create table "file"
-(
-    "id"       uuid primary key,
-    "name"     varchar(255),
-    "url"      varchar(255),
-    "date"     DATE,
-    "parentId" uuid,
-    "type"     anyenum,
-    "size"     INTEGER,
-    "children" uuid
+    id       uuid primary key,
+    name     varchar(255),
+    url      varchar(255),
+    date     DATE,
+    parentId uuid,
+    type     pg_enum('FOLDER', 'FILE'),
+    size     BIGINT,
+    FOREIGN KEY (parentId) REFERENCES item (id)
 );

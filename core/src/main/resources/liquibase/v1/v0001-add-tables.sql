@@ -4,8 +4,8 @@ create table "item"
     name     varchar(255),
     url      varchar(255),
     date     DATE,
-    parentId uuid,
+    parent_id uuid,
     type     varchar(20),
     size     BIGINT,
-    FOREIGN KEY (parentId) REFERENCES item (id)
+    FOREIGN KEY (parent_id) REFERENCES item (id)
 );

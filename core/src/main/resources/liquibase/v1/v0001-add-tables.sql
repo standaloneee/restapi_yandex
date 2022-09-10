@@ -5,7 +5,7 @@ create table "item"
     url      varchar(255),
     date     DATE,
     parentId uuid,
-    type     pg_enum('FOLDER', 'FILE'),
+    type     varchar(20),
     size     BIGINT,
     FOREIGN KEY (parentId) REFERENCES item (id)
 );

@@ -8,7 +8,8 @@ plugins {
 
 group = 'ru.stand.contest'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+sourceCompatibility = '11'
+defaultTasks 'clean', 'build'
 
 configurations {
     compileOnly {
@@ -18,13 +19,18 @@ configurations {
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.data:spring-data-jpa:2.7.2'
 //    implementation 'com.fasterxml.jackson.core:jackson-core:2.13.3'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
     implementation 'org.openapitools:jackson-databind-nullable:0.2.2'
 
 //    implementation 'io.springfox:springfox-swagger2:2.9.2'
@@ -45,9 +51,6 @@ dependencies {
     implementation 'org.liquibase:liquibase-core'
 
 
-    compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'org.postgresql:postgresql'
-    annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
@@ -65,7 +68,6 @@ task openApiGenerateTask(type: org.openapitools.generator.gradle.plugin.tasks.Ge
     apiPackage.set("ru.stand.contest.restapi_yandex.controller")
     invokerPackage.set("ru.stand.contest.restapi_yandex.invoker")
     modelPackage.set("ru.stand.contest.restapi_yandex.model")
-//    infoPackage.set("ru.stand.contest.restapi_yandex")
 
     configOptions = [
             dateLibrary: "java17"
@@ -85,11 +87,6 @@ compileJava {
     source += sourceSets.main.java
 }
 
-//tasks {
-////    var openApiGenerate = getting
-//    dependsOn(openApiGenerate)
-//
-//}
 tasks.named('test') {
     useJUnitPlatform()
 }

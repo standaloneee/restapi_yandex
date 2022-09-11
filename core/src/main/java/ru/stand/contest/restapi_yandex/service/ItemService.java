@@ -12,10 +12,13 @@ import ru.stand.contest.restapi_yandex.model.SystemItem;
 import ru.stand.contest.restapi_yandex.repository.ItemRepository;
 import ru.stand.contest.restapi_yandex.validator.ImportsValidator;
 
+import javax.transaction.Transactional;
+import java.beans.Transient;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,19 +26,22 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class ItemService {
-    
+
     private final ItemRepository itemRepository;
 
     @SneakyThrows
-    public SystemItemImportDto setItems(List<SystemItemImportRequest> systemItem){
+    @Transactional()
+    public SystemItemImportDto setItems(List<SystemItemImportRequest> systemItem) throws Error {
         log.debug("123");
-
+//        ImportsValidator.validateFile(systemItem);
+        List<Item> itemsList = new ArrayList<>();
         for (SystemItemImportRequest request : systemItem) {
-            request.getItems().stream()
+            itemsList.addAll(request.getItems().stream()
                     .map(item -> ItemMapper.INSTANCE.toEntity(item, new Date(request.getUpdateDate().getTime())))
-                    .forEach(itemRepository::save);
+                    .peek(item -> ImportsValidator.validateItem(item))
+                    .collect(Collectors.toList()));
         }
-
+        ImportsValidator.validateItems(itemsList);
 //        ImportsValidator.validateFile(systemItem.stream()
 //                .flatMap(o->o.getItems()
 //                        .stream().map(o1-> new SystemItemImportDto(o1.getId(), o1.getUrl(), o1.getParentId(), o1.getType(), o1.getSize()))).collect(Collectors.toList()));

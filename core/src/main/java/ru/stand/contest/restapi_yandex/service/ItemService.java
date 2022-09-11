@@ -14,10 +14,12 @@ import ru.stand.contest.restapi_yandex.model.SystemItem;
 import ru.stand.contest.restapi_yandex.repository.ItemRepository;
 import ru.stand.contest.restapi_yandex.validator.ImportsValidator;
 
+import javax.transaction.Transactional;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -42,7 +44,7 @@ public class ItemService {
                     .peek(item -> ImportsValidator.validateItem(item))
                     .collect(Collectors.toList()));
         }
-
+        ImportsValidator.validateItems(itemsList);
 
         return null;
     }

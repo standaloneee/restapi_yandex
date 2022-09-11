@@ -6,8 +6,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Arrays;
 import java.util.UUID;
 
+import lombok.AllArgsConstructor;
 import org.openapitools.jackson.nullable.JsonNullable;
+import org.springframework.lang.Nullable;
 import ru.stand.contest.restapi_yandex.model.SystemItemType;
+import ru.stand.contest.restapi_yandex.interfaces.EnumNamePattern;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -21,18 +24,23 @@ import javax.annotation.Generated;
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-09-09T13:45:12.975114900+03:00[Europe/Moscow]")
+@AllArgsConstructor
 public class SystemItemImportDto {
 
   @JsonProperty("id")
+  @NotNull
   private UUID id;
 
   @JsonProperty("url")
+  @Nullable
   private JsonNullable<String> url = JsonNullable.undefined();
 
   @JsonProperty("parentId")
+  @Nullable
   private UUID parentId;
 
   @JsonProperty("type")
+  @EnumNamePattern(regexp = "FILE|FOLDER")
   private SystemItemType type;
 
   @JsonProperty("size")
@@ -125,8 +133,8 @@ public class SystemItemImportDto {
   */
 
   @Schema(name = "size", description = "Целое число, для папок поле должно содержать null.", required = false)
-  public JsonNullable<Long> getSize() {
-    return JsonNullable.of(size);
+  public Long getSize() {
+    return size;
   }
 
   public void setSize(Long size) {

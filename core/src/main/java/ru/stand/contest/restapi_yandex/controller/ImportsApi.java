@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.NativeWebRequest;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 import javax.annotation.Generated;
 
@@ -32,7 +33,7 @@ public interface ImportsApi {
         return Optional.empty();
     }
 
-    void save(SystemItemImportRequest systemItemImportRequest);
+    void save(List<SystemItemImportRequest> systemItemImportRequest);
 
     /**
      * POST /imports
@@ -59,7 +60,7 @@ public interface ImportsApi {
         consumes = { "application/json" }
     )
     default ResponseEntity<Void> importsPost(
-        @Parameter(name = "SystemItemImportRequest", description = "") @Valid @RequestBody(required = false) SystemItemImportRequest systemItemImportRequest
+        @Parameter(name = "SystemItemImportRequest", description = "") @Valid @RequestBody(required = false) List<SystemItemImportRequest> systemItemImportRequest
     ) {
         save(systemItemImportRequest);
         return new ResponseEntity<>(HttpStatus.OK);

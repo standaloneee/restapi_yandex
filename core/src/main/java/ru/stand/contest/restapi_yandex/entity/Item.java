@@ -1,8 +1,11 @@
 package ru.stand.contest.restapi_yandex.entity;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.Hibernate;
 import ru.stand.contest.restapi_yandex.enums.Type;
+import ru.stand.contest.restapi_yandex.model.SystemItemType;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,7 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -22,6 +25,8 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @Table(name = "item")
+@Getter
+@Setter
 public class Item {
 
     @Id
@@ -34,11 +39,11 @@ public class Item {
     private String url;
 
     @Column(name = "date")
-    private LocalDate date;
+    private Date date;
 
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
-    private Type type;
+    private SystemItemType type;
 
     @Column(name = "parent_id")
     private UUID parentId;

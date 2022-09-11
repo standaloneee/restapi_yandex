@@ -32,6 +32,8 @@ public interface NodesApi {
         return Optional.empty();
     }
 
+    SystemItem getSystemItem(String id);
+
     /**
      * GET /nodes/{id}
      * Получить информацию об элементе по идентификатору. При получении информации о папке также предоставляется информация о её дочерних элементах.  - для пустой папки поле children равно пустому массиву, а для файла равно null - размер папки - это суммарный размер всех её элементов. Если папка не содержит элементов, то размер равен 0. При обновлении размера элемента, суммарный размер папки, которая содержит этот элемент, тоже обновляется. 
@@ -73,7 +75,7 @@ public interface NodesApi {
                 }
             }
         });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+        return ResponseEntity.ok(getSystemItem(id));
 
     }
 

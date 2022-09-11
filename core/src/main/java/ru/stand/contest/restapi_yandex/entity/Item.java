@@ -32,9 +32,6 @@ public class Item {
     @Id
     private UUID id;
 
-    @Column(name = "name")
-    private String name;
-
     @Column(name = "url")
     private String url;
 

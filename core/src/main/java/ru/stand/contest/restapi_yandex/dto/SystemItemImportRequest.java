@@ -1,6 +1,8 @@
 package ru.stand.contest.restapi_yandex.dto;
 
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
@@ -28,7 +30,8 @@ public class SystemItemImportRequest {
   private List<SystemItemImportDto> items;
 
   @JsonProperty("updateDate")
-  private String updateDate;
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+  private Date updateDate;
 
   public SystemItemImportRequest items(List<SystemItemImportDto> items) {
     this.items = items;
@@ -57,7 +60,7 @@ public class SystemItemImportRequest {
     this.items = items;
   }
 
-  public SystemItemImportRequest updateDate(String updateDate) {
+  public SystemItemImportRequest updateDate(Date updateDate) {
     this.updateDate = updateDate;
     return this;
   }
@@ -68,11 +71,11 @@ public class SystemItemImportRequest {
   */
   @Valid
   @Schema(name = "updateDate", example = "2022-05-28T21:12:01Z", description = "Время обновления добавляемых элементов.", required = false)
-  public String getUpdateDate() {
+  public Date getUpdateDate() {
     return updateDate;
   }
 
-  public void setUpdateDate(String updateDate) {
+  public void setUpdateDate(Date updateDate) {
     this.updateDate = updateDate;
   }
 

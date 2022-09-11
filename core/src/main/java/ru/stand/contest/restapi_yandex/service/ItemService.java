@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import ru.stand.contest.restapi_yandex.dto.SystemItemImportDto;
 import ru.stand.contest.restapi_yandex.dto.SystemItemImportRequest;
 import ru.stand.contest.restapi_yandex.entity.Item;
+import ru.stand.contest.restapi_yandex.mapper.ItemMapper;
 import ru.stand.contest.restapi_yandex.model.SystemItem;
 import ru.stand.contest.restapi_yandex.repository.ItemRepository;
 import ru.stand.contest.restapi_yandex.validator.ImportsValidator;
@@ -28,6 +29,13 @@ public class ItemService {
     @SneakyThrows
     public SystemItemImportDto setItems(List<SystemItemImportRequest> systemItem){
         log.debug("123");
+
+        for (SystemItemImportRequest request : systemItem) {
+            request.getItems().stream()
+                    .map(item -> ItemMapper.INSTANCE.toEntity(item, new Date(request.getUpdateDate().getTime())))
+                    .forEach(itemRepository::save);
+        }
+
 //        ImportsValidator.validateFile(systemItem.stream()
 //                .flatMap(o->o.getItems()
 //                        .stream().map(o1-> new SystemItemImportDto(o1.getId(), o1.getUrl(), o1.getParentId(), o1.getType(), o1.getSize()))).collect(Collectors.toList()));

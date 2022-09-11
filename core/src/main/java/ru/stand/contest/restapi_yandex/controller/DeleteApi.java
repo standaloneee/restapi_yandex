@@ -70,7 +70,8 @@ public interface DeleteApi {
     )
     default ResponseEntity<Void> deleteIdDelete(
         @Parameter(name = "id", description = "Идентификатор", required = true) @PathVariable("id") String id,
-        @NotNull @Parameter(name = "date", description = "Дата и время запроса", required = true) @Valid @RequestParam(value = "date", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date date
+        @NotNull @Parameter(name = "date", description = "Дата и время запроса", required = true)
+        @Valid @RequestParam(value = "date", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date date
     ) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 

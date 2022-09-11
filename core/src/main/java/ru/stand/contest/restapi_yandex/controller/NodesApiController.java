@@ -3,6 +3,7 @@ package ru.stand.contest.restapi_yandex.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -27,7 +28,7 @@ public class NodesApiController implements NodesApi {
     }
 
     @Override
-    public SystemItem getSystemItem(String id) {
+    public ResponseEntity<SystemItem> getSystemItem(String id) {
         return itemService.getSystemItem(id);
     }
 

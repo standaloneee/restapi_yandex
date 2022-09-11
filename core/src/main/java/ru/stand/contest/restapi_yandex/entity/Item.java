@@ -3,6 +3,7 @@ package ru.stand.contest.restapi_yandex.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 import ru.stand.contest.restapi_yandex.enums.Type;
 import ru.stand.contest.restapi_yandex.model.SystemItemType;
@@ -27,6 +28,7 @@ import java.util.UUID;
 @Table(name = "item")
 @Getter
 @Setter
+@ToString
 public class Item {
 
     @Id
@@ -48,8 +50,9 @@ public class Item {
     @Column(name = "size")
     private Long size;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "parent_id", referencedColumnName = "id")
+    @ToString.Exclude
     private List<Item> items;
 
     public void addItem(Item item) {

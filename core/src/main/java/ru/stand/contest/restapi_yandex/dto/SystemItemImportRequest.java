@@ -27,6 +27,7 @@ public class SystemItemImportRequest {
 
   @JsonProperty("items")
   @NotEmpty
+  @Valid
   private List<SystemItemImportDto> items;
 
   @JsonProperty("updateDate")

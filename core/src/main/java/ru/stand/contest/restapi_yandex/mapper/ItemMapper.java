@@ -29,7 +29,7 @@ public abstract class ItemMapper {
     public static final ItemMapper INSTANCE = Mappers.getMapper(ItemMapper.class);
 
     @Mapping(target = "date", expression = "java(date)")
-    @Mapping(target = "url", expression = "java(systemItem.getUrl().get())")
+    @Mapping(target = "url", expression = "java(systemItem.getUrl())")
     @Mapping(target = "size", expression = "java(systemItem.getSize())")
     public abstract Item toEntity(SystemItemImportDto systemItem, @Context Date date);
 

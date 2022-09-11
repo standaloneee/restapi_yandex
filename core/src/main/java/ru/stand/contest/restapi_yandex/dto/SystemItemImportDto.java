@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.UUID;
 
 import lombok.AllArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.lang.Nullable;
 import ru.stand.contest.restapi_yandex.model.SystemItemType;
@@ -28,22 +29,25 @@ import javax.annotation.Generated;
 public class SystemItemImportDto {
 
   @JsonProperty("id")
-  @NotNull
+//  @NotNull
   private UUID id;
 
   @JsonProperty("url")
   @Nullable
-  private JsonNullable<String> url = JsonNullable.undefined();
+//  @Length(max = 255)
+  private String url;
 
   @JsonProperty("parentId")
   @Nullable
   private UUID parentId;
 
   @JsonProperty("type")
-  @EnumNamePattern(regexp = "FILE|FOLDER")
+//  @EnumNamePattern(regexp = "FILE|FOLDER", message = "ERROR123")
   private SystemItemType type;
 
   @JsonProperty("size")
+  @Nullable
+  @Positive
   private Long size;
 
   public SystemItemImportDto id(UUID id) {
@@ -55,7 +59,7 @@ public class SystemItemImportDto {
    * Уникальный идентфикатор
    * @return id
   */
-  @NotNull
+//  @NotNull
   @Schema(name = "id", example = "элемент_1_1", description = "Уникальный идентфикатор", required = true)
   public UUID getId() {
     return id;
@@ -66,7 +70,7 @@ public class SystemItemImportDto {
   }
 
   public SystemItemImportDto url(String url) {
-    this.url = JsonNullable.of(url);
+    this.url = url;
     return this;
   }
 
@@ -76,11 +80,11 @@ public class SystemItemImportDto {
   */
 
   @Schema(name = "url", description = "Ссылка на файл. Для папок поле равнно null.", required = false)
-  public JsonNullable<String> getUrl() {
+  public String getUrl() {
     return url;
   }
 
-  public void setUrl(JsonNullable<String> url) {
+  public void setUrl(String url) {
     this.url = url;
   }
 

@@ -80,7 +80,15 @@ public interface NodeApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"items\" : [ { \"id\" : \"элемент_1_4\", \"url\" : \"/file/url1\", \"date\" : \"2022-05-28T21:12:01.000Z\", \"parentId\" : \"элемент_1_1\", \"size\" : 234, \"type\" : \"FILE\" }, { \"id\" : \"элемент_1_4\", \"url\" : \"/file/url1\", \"date\" : \"2022-05-28T21:12:01.000Z\", \"parentId\" : \"элемент_1_1\", \"size\" : 234, \"type\" : \"FILE\" } ] }";
+                    String exampleString = "{ \"items\" : [ { \"id\" : \"элемент_1_4\"," +
+                            " \"url\" : \"/file/url1\"," +
+                            " \"date\" : \"2022-05-28T21:12:01.000Z\"," +
+                            " \"parentId\" : \"элемент_1_1\"," +
+                            " \"size\" : 234, \"type\" : \"FILE\" }," +
+                            " { \"id\" : \"элемент_1_4\", \"url\" : \"/file/url1\"," +
+                            " \"date\" : \"2022-05-28T21:12:01.000Z\", " +
+                            "\"parentId\" : \"элемент_1_1\", \"size\" : 234," +
+                            " \"type\" : \"FILE\" } ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

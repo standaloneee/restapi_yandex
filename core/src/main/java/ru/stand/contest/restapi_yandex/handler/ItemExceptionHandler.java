@@ -1,5 +1,6 @@
 package ru.stand.contest.restapi_yandex.handler;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -13,11 +14,11 @@ import javax.validation.ConstraintViolationException;
 public class ItemExceptionHandler {
 
 
-    @ExceptionHandler({ValidationItemException.class, HttpMessageNotReadableException.class, ConstraintViolationException.class})
+    @ExceptionHandler({ValidationItemException.class, HttpMessageNotReadableException.class, ConstraintViolationException.class, InvalidFormatException.class})
     protected ResponseEntity<Error> handleItemException(final RuntimeException ex) {
         Error error = new Error();
-//        error.code(400).message("Validation Failed");
-        error.code(400).message(ex.getMessage());
+        error.code(400).message("Validation Failed");
+//        error.code(400).message(ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 

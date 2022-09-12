@@ -50,4 +50,11 @@ public class ItemService {
                 .map(item -> ResponseEntity.ok(ItemMapper.INSTANCE.toDto(item)))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
+
+
+    public ResponseEntity<Void> deleteById(String id, java.util.Date date) {
+        itemRepository.deleteById(UUID.fromString(id));
+        return ResponseEntity.ok().build();
+    }
+
 }

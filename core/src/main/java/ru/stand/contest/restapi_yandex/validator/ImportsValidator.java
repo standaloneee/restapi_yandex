@@ -1,29 +1,25 @@
 package ru.stand.contest.restapi_yandex.validator;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.expression.spel.ast.BooleanLiteral;
 import org.springframework.stereotype.Service;
 import ru.stand.contest.restapi_yandex.entity.Item;
 import ru.stand.contest.restapi_yandex.handler.ValidationItemException;
 import ru.stand.contest.restapi_yandex.model.SystemItemType;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Slf4j
 public class ImportsValidator {
+    Set<Item> itemSet = new HashSet<>();
+    boolean firstElem = false;
 
-    public static void validateItem(Item systemItem) {
-        if (!SystemItemType.FOLDER.equals(systemItem.getType()) && !SystemItemType.FILE.equals(systemItem.getType())) {
-            log.debug(systemItem.getType().toString());
-            throw new ValidationItemException("Validation Failed");
-        }
-//        log.debug("validation");
-        if (systemItem.getId() == null) {
-            throw new ValidationItemException("Validation Failed");
-        }
+    public void validateItem(Item systemItem) {
+
         if (SystemItemType.FOLDER.equals(systemItem.getType())) {
-//            log.debug(systemItem.getType().toString());
-//            log.debug(systemItem.getUrl());
             if (systemItem.getUrl() != null) {
                 throw new ValidationItemException("Validation Failed");
             }
@@ -38,6 +34,17 @@ public class ImportsValidator {
             if(systemItem.getSize() <= 0 ){
                 throw new ValidationItemException("Validation Failed");
             }
+        }
+        if(!firstElem){
+            itemSet.add(systemItem);
+            firstElem = true;
+        }
+        else{
+            for (var item:
+                 itemSet) {
+                if(item.getId().equals(systemItem.getId())){
+                    throw new ValidationItemException("not unique id");
+            }}
         }
 
 
@@ -55,7 +62,7 @@ public class ImportsValidator {
                 throw new ValidationItemException("Validation Failed");
             }
             if (items.stream().anyMatch(o -> o.getId().equals(item.getId()))) {
-//                if(item.getParentId() == null) break;
+                if(item.getParentId() == null) break;
                 throw new ValidationItemException("not u");
             }
         }

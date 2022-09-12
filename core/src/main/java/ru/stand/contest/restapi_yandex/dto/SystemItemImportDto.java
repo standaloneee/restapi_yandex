@@ -29,12 +29,12 @@ import javax.annotation.Generated;
 public class SystemItemImportDto {
 
   @JsonProperty("id")
-//  @NotNull
+  @NotNull
   private UUID id;
 
   @JsonProperty("url")
   @Nullable
-//  @Length(max = 255)
+  @Length(max = 255)
   private String url;
 
   @JsonProperty("parentId")
@@ -42,7 +42,7 @@ public class SystemItemImportDto {
   private UUID parentId;
 
   @JsonProperty("type")
-//  @EnumNamePattern(regexp = "FILE|FOLDER", message = "ERROR123")
+  @EnumNamePattern(regexp = "FILE|FOLDER")
   private SystemItemType type;
 
   @JsonProperty("size")

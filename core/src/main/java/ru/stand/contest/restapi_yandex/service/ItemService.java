@@ -22,6 +22,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -35,16 +37,18 @@ public class ItemService {
     @SneakyThrows
     @Transactional()
     public SystemItemImportDto setItems(List<SystemItemImportRequest> systemItem) throws Error {
+        ImportsValidator checkValidItem= new ImportsValidator();
         log.debug("123");
 //        ImportsValidator.validateFile(systemItem);
         List<Item> itemsList = new ArrayList<>();
         for (SystemItemImportRequest request : systemItem) {
             itemsList.addAll(request.getItems().stream()
                     .map(item -> ItemMapper.INSTANCE.toEntity(item, new Date(request.getUpdateDate().getTime())))
-                    .peek(item -> ImportsValidator.validateItem(item))
+                    .peek(item -> checkValidItem.validateItem(item))
                     .collect(Collectors.toList()));
         }
-        ImportsValidator.validateItems(itemsList);
+
+//        ImportsValidator.validateItems(itemsList);
 
         return null;
     }

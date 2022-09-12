@@ -23,6 +23,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.multipart.MultipartFile;
+import ru.stand.contest.restapi_yandex.util.UUID;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -39,6 +40,8 @@ public interface DeleteApi {
     default Optional<NativeWebRequest> getRequest() {
         return Optional.empty();
     }
+
+    ResponseEntity<Void> deleteItem(String id, Date date);
 
     /**
      * DELETE /delete/{id}
@@ -69,11 +72,11 @@ public interface DeleteApi {
         produces = { "application/json" }
     )
     default ResponseEntity<Void> deleteIdDelete(
-        @Parameter(name = "id", description = "Идентификатор", required = true) @PathVariable("id") String id,
+        @Parameter(name = "id", description = "Идентификатор", required = true) @PathVariable("id") @UUID String id,
         @NotNull @Parameter(name = "date", description = "Дата и время запроса", required = true)
         @Valid @RequestParam(value = "date", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date date
     ) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+        return deleteItem(id, date);
 
     }
 

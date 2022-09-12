@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import ru.stand.contest.restapi_yandex.model.Error;
 
 import javax.validation.ConstraintViolationException;
@@ -19,7 +20,8 @@ public class ItemExceptionHandler {
             HttpMessageNotReadableException.class,
             ConstraintViolationException.class,
             ItemNotFoundException.class,
-            InvalidFormatException.class})
+            InvalidFormatException.class,
+            MethodArgumentTypeMismatchException.class})
     protected ResponseEntity<Error> handleItemException(final RuntimeException ex) {
 
         if (ex instanceof ItemNotFoundException) {

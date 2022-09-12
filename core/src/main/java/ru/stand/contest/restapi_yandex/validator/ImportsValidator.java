@@ -43,7 +43,7 @@ public class ImportsValidator {
                 }
 
                 if (systemItem.getParentId() == null) {
-                } else if (systemItem.getParentId().equals(item.getId()) && systemItem.getParentId() != null && item.getType().equals(SystemItemType.FILE)) {
+                } else if (systemItem.getParentId().equals(item.getId()) && item.getType().equals(SystemItemType.FILE)) {
                     throw new ValidationItemException("file can't have parent as file");
                 }
             }

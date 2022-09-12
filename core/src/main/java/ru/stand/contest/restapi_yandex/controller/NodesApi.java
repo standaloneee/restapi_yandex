@@ -32,6 +32,8 @@ public interface NodesApi {
         return Optional.empty();
     }
 
+    ResponseEntity<SystemItem> getSystemItem(String id);
+
     /**
      * GET /nodes/{id}
      * Получить информацию об элементе по идентификатору. При получении информации о папке также предоставляется информация о её дочерних элементах.  - для пустой папки поле children равно пустому массиву, а для файла равно null - размер папки - это суммарный размер всех её элементов. Если папка не содержит элементов, то размер равен 0. При обновлении размера элемента, суммарный размер папки, которая содержит этот элемент, тоже обновляется. 
@@ -64,16 +66,16 @@ public interface NodesApi {
     default ResponseEntity<SystemItem> nodesIdGet(
         @Parameter(name = "id", description = "Идентификатор элемента", required = true) @PathVariable("id") String id
     ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"id\" : \"элемент_1_2\", \"url\" : null, \"type\" : \"FOLDER\", \"parentId\" : null, \"date\" : \"2022-05-28T21:12:01.000Z\", \"size\" : 12, \"children\" : [ { \"url\" : \"/file/url1\", \"id\" : \"элемент_1_3\", \"size\" : 4, \"date\" : \"2022-05-28T21:12:01.000Z\", \"type\" : \"FILE\", \"parentId\" : \"элемент_1_2\" }, { \"type\" : \"FOLDER\", \"url\" : null, \"id\" : \"элемент_1_1\", \"date\" : \"2022-05-26T21:12:01.000Z\", \"parentId\" : \"элемент_1_2\", \"size\" : 8, \"children\" : [ { \"url\" : \"/file/url2\", \"id\" : \"элемент_1_4\", \"parentId\" : \"элемент_1_1\", \"date\" : \"2022-05-26T21:12:01.000Z\", \"size\" : 8, \"type\" : \"FILE\" } ] } ] }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+//        getRequest().ifPresent(request -> {
+//            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+//                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+//                    String exampleString = "{ \"id\" : \"элемент_1_2\", \"url\" : null, \"type\" : \"FOLDER\", \"parentId\" : null, \"date\" : \"2022-05-28T21:12:01.000Z\", \"size\" : 12, \"children\" : [ { \"url\" : \"/file/url1\", \"id\" : \"элемент_1_3\", \"size\" : 4, \"date\" : \"2022-05-28T21:12:01.000Z\", \"type\" : \"FILE\", \"parentId\" : \"элемент_1_2\" }, { \"type\" : \"FOLDER\", \"url\" : null, \"id\" : \"элемент_1_1\", \"date\" : \"2022-05-26T21:12:01.000Z\", \"parentId\" : \"элемент_1_2\", \"size\" : 8, \"children\" : [ { \"url\" : \"/file/url2\", \"id\" : \"элемент_1_4\", \"parentId\" : \"элемент_1_1\", \"date\" : \"2022-05-26T21:12:01.000Z\", \"size\" : 8, \"type\" : \"FILE\" } ] } ] }";
+//                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+//                    break;
+//                }
+//            }
+//        });
+        return getSystemItem(id);
 
     }
 

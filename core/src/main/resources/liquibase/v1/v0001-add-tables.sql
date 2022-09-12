@@ -1,7 +1,6 @@
 create table "item"
 (
     id       uuid primary key,
-    name     varchar(255),
     url      varchar(255),
     date     DATE,
     parent_id uuid,

@@ -27,11 +27,15 @@ public class ItemExceptionHandler {
         }
 
         Error error = new Error();
-        error.code(400).message(ex.getMessage());
+        error.code(400).message("Validation Failed");
+//        error.code(400).message(ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/deletion
 }
 

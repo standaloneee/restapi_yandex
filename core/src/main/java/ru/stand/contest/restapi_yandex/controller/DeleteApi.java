@@ -40,6 +40,8 @@ public interface DeleteApi {
         return Optional.empty();
     }
 
+    ResponseEntity<Void> deleteItem(String id, Date date);
+
     /**
      * DELETE /delete/{id}
      * Удалить элемент по идентификатору. При удалении папки удаляются все дочерние элементы. Доступ к истории обновлений удаленного элемента невозможен.  **Обратите, пожалуйста, внимание на этот обработчик. При его некорректной работе тестирование может быть невозможно.** 
@@ -73,7 +75,7 @@ public interface DeleteApi {
         @NotNull @Parameter(name = "date", description = "Дата и время запроса", required = true)
         @Valid @RequestParam(value = "date", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date date
     ) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+        return deleteItem(id, date);
 
     }
 

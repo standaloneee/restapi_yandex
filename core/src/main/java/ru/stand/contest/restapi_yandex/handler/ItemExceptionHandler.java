@@ -33,9 +33,5 @@ public class ItemExceptionHandler {
     }
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/deletion
 }
 

@@ -33,14 +33,13 @@ public class ItemService {
     @SneakyThrows
     @Transactional()
     public SystemItemImportDto setItems(List<SystemItemImportRequest> systemItem) throws Error {
-        ImportsValidator checkValidItem= new ImportsValidator();
-        log.debug("123");
-//        ImportsValidator.validateFile(systemItem);
+        ImportsValidator checkValidItem = new ImportsValidator();
+        log.debug("setItemsService");
         List<Item> itemsList = new ArrayList<>();
         for (SystemItemImportRequest request : systemItem) {
             itemsList.addAll(request.getItems().stream()
                     .map(item -> ItemMapper.INSTANCE.toEntity(item, new Date(request.getUpdateDate().getTime())))
-                    //.peek(item -> checkValidItem.validateItem(item))
+                    .peek(checkValidItem::validateItem)
                     .peek(itemRepository::save)
                     .collect(Collectors.toList()));
         }

@@ -34,7 +34,7 @@ public abstract class ItemMapper {
     public abstract Item toEntity(SystemItemImportDto systemItem, @Context Date date);
 
     @Mapping(target = "children", source = "item", qualifiedByName = "children")
-    @Mapping(target = "size", expression = "java(JsonNullable.of(Long.valueOf(item.getItems().size())))")
+    @Mapping(target = "size", expression = "java(item.getSize())")
     @Mapping(target = "url", expression = "java(JsonNullable.of(item.getUrl()))")
     @Mapping(target = "date", expression = "java(new java.util.Date(item.getDate().getTime()))")
     public abstract SystemItem toDto(Item item);

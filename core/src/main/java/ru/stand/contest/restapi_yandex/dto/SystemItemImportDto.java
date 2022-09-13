@@ -161,7 +161,7 @@ public class SystemItemImportDto {
         Objects.equals(this.size, systemItemImportDto.size);
   }
 
-  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
+  private static <T> boolean ezqualsNullable(JsonNullable<T> a, JsonNullable<T> b) {
     return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
   }
 

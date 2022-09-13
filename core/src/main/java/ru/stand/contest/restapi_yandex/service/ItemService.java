@@ -13,10 +13,16 @@ import ru.stand.contest.restapi_yandex.entity.Item;
 import ru.stand.contest.restapi_yandex.handler.ItemNotFoundException;
 import ru.stand.contest.restapi_yandex.mapper.ItemMapper;
 import ru.stand.contest.restapi_yandex.model.SystemItem;
+import ru.stand.contest.restapi_yandex.model.SystemItemHistoryResponse;
 import ru.stand.contest.restapi_yandex.repository.ItemRepository;
 import ru.stand.contest.restapi_yandex.validator.ImportsValidator;
 
+
+//import java.util.*;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -66,6 +72,23 @@ public class ItemService {
             return ResponseEntity.ok().build();
         }
         throw new ItemNotFoundException("Элемент не найден.");
+    }
+
+    public ResponseEntity<SystemItemHistoryResponse> getLastDayHistoryUpdate(java.util.Date date){
+
+        Date start = new Date(date.getTime() - 86420000);
+
+        Date end = new java.sql.Date(date.getTime());
+
+
+
+        List<Item> listItem = itemRepository.findByDateBetween(start, end);
+        log.debug(listItem.toString());
+
+// осталось item смапить в  систем итем
+        SystemItemHistoryResponse systemItemHistoryResponse = new SystemItemHistoryResponse();
+//        systemItemHistoryResponse.setItems(listItem);
+        return ResponseEntity.ok(systemItemHistoryResponse);
     }
 
 }

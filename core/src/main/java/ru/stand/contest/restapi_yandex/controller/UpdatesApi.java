@@ -40,7 +40,8 @@ public interface UpdatesApi {
     default Optional<NativeWebRequest> getRequest() {
         return Optional.empty();
     }
-
+//    ResponseEntity<SystemItemHistoryResponse> getLastDayHistoryUpdate();
+    ResponseEntity<SystemItemHistoryResponse> getLastDayHistoryUpdate(Date date);
     /**
      * GET /updates
      * Получение списка **файлов**, которые были обновлены за последние 24 часа включительно [date - 24h, date] от времени переданном в запросе. 
@@ -69,15 +70,18 @@ public interface UpdatesApi {
     default ResponseEntity<SystemItemHistoryResponse> updatesGet(
         @NotNull @Parameter(name = "date", description = "Дата и время запроса. Дата должна обрабатываться согласно ISO 8601 (такой придерживается OpenAPI). Если дата не удовлетворяет данному формату, необходимо отвечать 400", required = true) @Valid @RequestParam(value = "date", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date date
     ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"items\" : [ { \"id\" : \"элемент_1_4\", \"url\" : \"/file/url1\", \"date\" : \"2022-05-28T21:12:01.000Z\", \"parentId\" : \"элемент_1_1\", \"size\" : 234, \"type\" : \"FILE\" }, { \"id\" : \"элемент_1_4\", \"url\" : \"/file/url1\", \"date\" : \"2022-05-28T21:12:01.000Z\", \"parentId\" : \"элемент_1_1\", \"size\" : 234, \"type\" : \"FILE\" } ] }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
+//        getLastDayHistoryUpdate();
+        getLastDayHistoryUpdate(date);
+
+//        getRequest().ifPresent(request -> {
+//            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+//                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+//                    String exampleString = "{ \"items\" : [ { \"id\" : \"элемент_1_4\", \"url\" : \"/file/url1\", \"date\" : \"2022-05-28T21:12:01.000Z\", \"parentId\" : \"элемент_1_1\", \"size\" : 234, \"type\" : \"FILE\" }, { \"id\" : \"элемент_1_4\", \"url\" : \"/file/url1\", \"date\" : \"2022-05-28T21:12:01.000Z\", \"parentId\" : \"элемент_1_1\", \"size\" : 234, \"type\" : \"FILE\" } ] }";
+//                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+//                    break;
+//                }
+//            }
+//        });
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }

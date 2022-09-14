@@ -42,9 +42,17 @@ public class ItemService {
                     .peek(checkValidItem::validateItem)
                     .peek(itemRepository::save)
                     .collect(Collectors.toList()));
-        }
 
-//        ImportsValidator.validateItems(itemsList);
+        }
+        for (var item : itemsList) {
+           var parent = item;
+           var child = item;
+            while(child.getParentId()!=null){
+                parent = itemRepository.getItemById(child.getParentId());
+                parent.setSize(item.getSize() + parent.getSize());
+                child = parent;
+            }
+        }
 
         return null;
     }

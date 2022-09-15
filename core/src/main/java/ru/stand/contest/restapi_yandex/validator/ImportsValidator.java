@@ -25,7 +25,7 @@ public class ImportsValidator {
                 throw new ValidationItemException("Validation Failed");
             }
             else {
-                systemItem.setSize(0l);
+                systemItem.setSize(0L);
             }
         } else {
             if (systemItem.getUrl().length() > 255) {

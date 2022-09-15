@@ -1,8 +1,8 @@
 services:
-  db:
+  database:
     volumes:
       - ./pg_data:/var/lib/postgresql/data/pgdata
-    container_name: db
+    container_name: database
     image: postgres
     hostname: database
     restart: always
@@ -25,10 +25,10 @@ services:
       context: ./core
       dockerfile: Dockerfile
     environment:
-      - spring.datasource.url=jdbc:postgresql://db:5432/postgres
+      - spring.datasource.url=jdbc:postgresql://database:5432/postgres
     depends_on:
-      - db
+      - database
     ports:
       - "80:80"
-    links:
-      - db
+    expose:
+      - 80

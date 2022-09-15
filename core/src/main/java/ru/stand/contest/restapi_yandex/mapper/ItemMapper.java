@@ -28,10 +28,11 @@ public abstract class ItemMapper {
 
     public static final ItemMapper INSTANCE = Mappers.getMapper(ItemMapper.class);
 
-    @Mapping(target = "date", expression = "java(date)")
+//    @Mapping(target = "items", expression = "java(systemItem.getItems())")
+    @Mapping(target = "date", source = "date")
     @Mapping(target = "url", expression = "java(systemItem.getUrl())")
     @Mapping(target = "size", expression = "java(systemItem.getSize())")
-    public abstract Item toEntity(SystemItemImportDto systemItem, @Context Date date);
+    public abstract Item toEntity(SystemItemImportDto systemItem, Date date);
 
     @Mapping(target = "children", source = "item", qualifiedByName = "children")
     @Mapping(target = "size", expression = "java(item.getSize())")

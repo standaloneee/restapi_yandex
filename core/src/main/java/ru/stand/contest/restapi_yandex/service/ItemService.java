@@ -35,41 +35,16 @@ public class ItemService {
     @Transactional()
     public SystemItemImportDto setItems(List<SystemItemImportRequest> systemItem) throws Error {
         ImportsValidator checkValidItem = new ImportsValidator();
-//        log.debug("setItemsService");
         List<Item> itemsList = new ArrayList<>();
-//        List<Item> FiolderPlusSizeList = new ArrayList<>();
         for (SystemItemImportRequest request : systemItem) {
             itemsList.addAll(request.getItems().stream()
                     .map(item -> ItemMapper.INSTANCE.toEntity(item, new Date(request.getUpdateDate().getTime())))
                     .peek(checkValidItem::validateItem)
-
-
+                    .peek(this::updateFolderSize)
+//                    .peek(itemRepository::saveAndFlush)
                     .collect(Collectors.toList()));
         }
-        //                    .peek(this::UpdateFolderSize)
-//                    .peek(itemRepository::save)
-//                    .peek(itemRepository::flush)
-//                    .peek(itemRepository::saveAndFlush)
-
-        itemRepository.saveAll(itemsList);
-        log.debug(String.valueOf(itemsList));
-//        itemRepository.saveAllAndFlush(itemsList);
-
-
-        log.debug(String.valueOf(itemsList));
-
-//        for (Item item:itemsList) {
-//            UpdateFolderSize(item);
-//        }
-//        for (var item : itemsList) {
-//           var parent = item;
-//           var child = item;
-//            while(child.getParentId()!=null){
-//                parent = itemRepository.getItemById(child.getParentId());
-//                parent.setSize(item.getSize() + parent.getSize());
-//                child = parent;
-//            }
-//        }
+//        itemRepository.saveAll(itemsList);
         return null;
     }
 
@@ -77,11 +52,12 @@ public class ItemService {
         var tempFolder = item;
 
         if (item.getParentId() != null) {
-            tempFolder = itemRepository.findById(item.getParentId()).orElseThrow(() -> new ItemNotFoundException("хуй"));
+            tempFolder = itemRepository.findById(item.getParentId()).orElseThrow(() -> new ItemNotFoundException("itemErr"));
         } else {
             return;
         }
         var fSize = 0;
+        log.debug(String.valueOf(tempFolder));
         for (var fItem : tempFolder.getItems()) {
             fSize += fItem.getSize();
             if (fSize == tempFolder.getSize()) {
@@ -92,7 +68,7 @@ public class ItemService {
             }
         }
     }
-//    public void ChangeParentFolderSize(long deltaSize, Item folder){
+//    public void changeParentFolderSize(long deltaSize, Item folder){
 //        var parentFolder = folder;
 //        while(folder.getParentId() != null)
 //        {

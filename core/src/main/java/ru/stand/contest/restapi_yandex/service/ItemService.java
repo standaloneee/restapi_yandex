@@ -40,11 +40,21 @@ public class ItemService {
             itemsList.addAll(request.getItems().stream()
                     .map(item -> ItemMapper.INSTANCE.toEntity(item, new Date(request.getUpdateDate().getTime())))
                     .peek(checkValidItem::validateItem)
-                    .peek(this::updateFolderSize)
-//                    .peek(itemRepository::saveAndFlush)
+//                    .peek(this::updateFolderSize)
+                    .peek(itemRepository::save)
                     .collect(Collectors.toList()));
         }
 //        itemRepository.saveAll(itemsList);
+        for (var item : itemsList) {
+           var parent = item;
+           var child = item;
+            while(child.getParentId()!=null){
+                parent = itemRepository.getItemById(child.getParentId());
+                parent.setSize(item.getSize() + parent.getSize());
+                child = parent;
+            }
+        }
+
         return null;
     }
 
